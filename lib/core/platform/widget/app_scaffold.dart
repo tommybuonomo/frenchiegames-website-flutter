@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frenchiegames_website/core/platform/extension/context_extensions.dart';
 
+import '../../resources/app_colors.dart';
 import 'hover_text.dart';
 
 class AppScaffold extends StatefulWidget {
@@ -21,6 +22,16 @@ class _AppScaffoldState extends State<AppScaffold> {
       body: Stack(
         children: [
           widget.child,
+          Container(
+            height: 70,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [AppColors.background, Colors.transparent],
+              ),
+            ),
+          ),
           Container(
             child: Padding(
               padding: const EdgeInsets.all(20),

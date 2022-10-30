@@ -1,5 +1,8 @@
 {
   "app_name": "Frenchie Games",
   "header_our_games": "Nos jeux",
-  "header_contact_us": "Nous contacter"
+  "header_contact_us": "Nous contacter",
+  "ripple_effect": "Ripple Effect",
+  "linked_words": "Mots Liés",
+  "nonogram_colors": "Nonogram Colors"
 }
