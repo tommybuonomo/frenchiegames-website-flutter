@@ -119,17 +119,51 @@ class _HomePageState extends State<HomePage> {
     var appInfoIndex = _pageOffset.round();
     var appInfo = appInfoList[appInfoIndex];
     var opacity = 1.0 - ((_pageOffset - appInfoIndex) * 2).abs();
+    var responsiveAppContent = ResponsiveLazyProvider(
+        large: () => _buildLargeAppContent(appInfo), medium: () => _buildMediumAppContent(appInfo));
     return Opacity(
       opacity: opacity.clamp(0.0, 1.0),
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 40, vertical: 40),
-        child: Row(
+        child: responsiveAppContent.get(context),
+      ),
+    );
+  }
+
+  Widget _buildLargeAppContent(AppInfo appInfo) {
+    return Row(
+      children: [
+        Expanded(flex: 4, child: _buildContentAppInfo(appInfo)),
+        Expanded(flex: 6, child: _buildContentScreenshots(appInfo))
+      ],
+    );
+  }
+
+  Widget _buildMediumAppContent(AppInfo appInfo) {
+    return Column(
+      children: [
+        _buildTitle(appInfo),
+        SizedBox.fromSize(size: Size.fromHeight(20)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(flex: 4, child: _buildContentAppInfo(appInfo)),
-            Expanded(flex: 6, child: _buildContentScreenshots(appInfo))
+            Flexible(child: _buildStoreBadge(appInfo.playStoreUrl, AppResources.playStoreBadge, byWidth: false)),
+            SizedBox.fromSize(size: Size(20, 1)),
+            Flexible(child: _buildStoreBadge(appInfo.appStoreUrl, AppResources.appStoreBadge, byWidth: false)),
           ],
         ),
-      ),
+        SizedBox.fromSize(size: Size.fromHeight(20)),
+        _buildContentScreenshots(appInfo),
+        SizedBox.fromSize(size: Size.fromHeight(20)),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 40),
+          child: _buildDesc(appInfo, textAlign: TextAlign.center),
+        ),
+        SizedBox.fromSize(size: Size.fromHeight(100)),
+        _buildCondition(appInfo, "privacy_policy", appInfo.privacyPolicyUrl),
+        SizedBox.fromSize(size: Size.fromHeight(15)),
+        appInfo.termsUrl == null ? Container() : _buildCondition(appInfo, "terms", appInfo.termsUrl!),
+      ],
     );
   }
 
@@ -162,46 +196,58 @@ class _HomePageState extends State<HomePage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TText(
-          context,
-          appInfo.title,
-          style: context.textTheme.headline3,
-        ),
+        _buildTitle(appInfo),
         SizedBox.fromSize(size: Size.fromHeight(20)),
-        TText(
-          context,
-          appInfo.desc,
-          style: context.textTheme.headline6,
-        ),
+        _buildDesc(appInfo),
         SizedBox.fromSize(size: Size.fromHeight(20)),
         _buildStoreBadge(appInfo.playStoreUrl, AppResources.playStoreBadge),
         _buildStoreBadge(appInfo.appStoreUrl, AppResources.appStoreBadge),
         SizedBox.fromSize(size: Size.fromHeight(20)),
-        HoverText(
-          text: context.text("privacy_policy"),
-          onTap: () => _openUrl(context.text(appInfo.privacyPolicyUrl)),
-          style: context.textTheme.subtitle1,
-        ),
+        _buildCondition(appInfo, "privacy_policy", appInfo.privacyPolicyUrl),
         SizedBox.fromSize(size: Size.fromHeight(8)),
-        appInfo.termsUrl == null
-            ? Container()
-            : HoverText(
-                text: context.text("terms"),
-                onTap: () => _openUrl(context.text(appInfo.termsUrl!)),
-                style: context.textTheme.subtitle1,
-              )
+        appInfo.termsUrl == null ? Container() : _buildCondition(appInfo, "terms", appInfo.termsUrl!),
       ],
     );
   }
 
-  _buildStoreBadge(String url, String badge) {
+  HoverText _buildCondition(AppInfo appInfo, String condition, String url) {
+    return HoverText(
+      text: context.text(condition),
+      onTap: () => _openUrl(context.text(url)),
+      style: context.textTheme.subtitle1,
+    );
+  }
+
+  TText _buildDesc(AppInfo appInfo, {TextAlign? textAlign}) {
+    return TText(
+      context,
+      appInfo.desc,
+      style: context.textTheme.headline6,
+      textAlign: textAlign,
+    );
+  }
+
+  TText _buildTitle(AppInfo appInfo) {
+    return TText(
+      context,
+      appInfo.title,
+      style: context.textTheme.headline3,
+    );
+  }
+
+  _buildStoreBadge(String url, String badge, {bool byWidth = true}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: MouseRegion(
           cursor: SystemMouseCursors.click,
           child: GestureDetector(
               onTap: () => _openUrl(context.text(url)),
-              child: Container(constraints: BoxConstraints(maxWidth: 300), child: Image.network(badge)))),
+              child: Container(
+                  constraints: BoxConstraints(
+                    maxWidth: byWidth ? 300 : double.infinity,
+                    maxHeight: byWidth ? double.infinity : 80,
+                  ),
+                  child: Image.network(badge)))),
     );
   }
 
