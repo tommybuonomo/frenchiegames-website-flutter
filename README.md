@@ -1,16 +1,7 @@
-# frenchiegames_website
+# Frenchie Games website
 
-Frenchie Games Website
+This repository is the Flutter web application for the http://frenchiegames.app website. It uses assets made by myself using Figma.
 
-## Getting Started
+I created this website to promote my 3 games on the PlayStore and the AppStore. If you are an Indie game developer, do not hesitate to fork the project and replace the assets to make your own games promotion website 😘
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<img width="1512" alt="image" src="https://user-images.githubusercontent.com/15737675/198903755-d9f6b01b-e3ba-4d03-a862-032f55ba71e3.png">
