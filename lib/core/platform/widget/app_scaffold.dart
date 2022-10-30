@@ -18,40 +18,40 @@ class _AppScaffoldState extends State<AppScaffold> {
     var screenSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
-      appBar: PreferredSize(
-        preferredSize: Size(screenSize.width, 1000),
-        child: Container(
-          color: Theme.of(context).backgroundColor,
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      HoverText(
-                        text: context.text("header_our_games"),
-                        style: context.textTheme.subtitle1,
-                        onTap: () {},
-                        underline: true,
-                      ),
-                      SizedBox(width: screenSize.width / 20),
-                      HoverText(
-                        text: context.text("header_contact_us"),
-                        style: context.textTheme.subtitle1,
-                        onTap: () {},
-                        underline: true,
-                      ),
-                    ],
+      body: Stack(
+        children: [
+          widget.child,
+          Container(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        HoverText(
+                          text: context.text("header_our_games"),
+                          style: context.textTheme.subtitle1,
+                          onTap: () {},
+                          underline: true,
+                        ),
+                        SizedBox(width: screenSize.width / 20),
+                        HoverText(
+                          text: context.text("header_contact_us"),
+                          style: context.textTheme.subtitle1,
+                          onTap: () {},
+                          underline: true,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
-      body: Container(),
     );
   }
 }
