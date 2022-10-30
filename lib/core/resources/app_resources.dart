@@ -5,4 +5,6 @@ class AppResources {
   static const String linkedWordsIcon = "assets/assets/images/linked_words_icon.png";
   static const String nonogramIcon = "assets/assets/images/nonogram_icon.png";
   static const String rippleEffectIcon = "assets/assets/images/ripple_effect_icon.png";
+  static const String playStoreBadge = "assets/assets/images/play_store_badge.png";
+  static const String appStoreBadge = "assets/assets/images/app_store_badge.png";
 }

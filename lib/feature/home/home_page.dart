@@ -1,10 +1,14 @@
+import 'dart:js' as js;
+
 import 'package:flutter/material.dart';
 import 'package:frenchiegames_website/core/platform/extension/context_extensions.dart';
 import 'package:frenchiegames_website/core/platform/util/responsive_provider.dart';
 import 'package:frenchiegames_website/core/platform/widget/app_scaffold.dart';
 import 'package:frenchiegames_website/core/resources/app_resources.dart';
 
+import '../../core/platform/widget/translation_text.dart';
 import '../../core/resources/app_colors.dart';
+import 'model/app_info.dart';
 
 class HomePage extends StatefulWidget {
   static const route = "/";
@@ -100,42 +104,121 @@ class _HomePageState extends State<HomePage> {
   }
 
   _buildContent() {
+    return Transform.translate(
+      offset: Offset(0, -100),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [_buildAppIconsPager(), _buildAppContents()],
+      ),
+    );
+  }
+
+  Widget _buildAppContents() {
+    var appInfoList = [AppInfo.rippleEffectAppInfo, AppInfo.linkedWordsAppInfo, AppInfo.nonogramAppInfo];
+    var appInfoIndex = _pageOffset.round();
+    var appInfo = appInfoList[appInfoIndex];
+    var opacity = 1.0 - ((_pageOffset - appInfoIndex) * 2).abs();
+    return Opacity(
+      opacity: opacity.clamp(0.0, 1.0),
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 40, vertical: 40),
+        child: Row(
+          children: [
+            Expanded(flex: 4, child: _buildContentAppInfo(appInfo)),
+            Expanded(flex: 6, child: _buildContentScreenshots(appInfo))
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildContentScreenshots(AppInfo appInfo) {
+    var prefix = context.text(appInfo.screenshotPrefix);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _buildScreenshot("assets/assets/images/${prefix}1.png"),
+          _buildScreenshot("assets/assets/images/${prefix}2.png"),
+          _buildScreenshot("assets/assets/images/${prefix}3.png"),
+        ],
+      ),
+    );
+  }
+
+  _buildScreenshot(String screenshot) {
+    return Flexible(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Image.network(screenshot),
+      ),
+    );
+  }
+
+  Column _buildContentAppInfo(AppInfo appInfo) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TText(
+          context,
+          appInfo.title,
+          style: context.textTheme.headline3,
+        ),
+        SizedBox.fromSize(size: Size.fromHeight(20)),
+        TText(
+          context,
+          appInfo.desc,
+          style: context.textTheme.headline6,
+        ),
+        SizedBox.fromSize(size: Size.fromHeight(20)),
+        _buildStoreBadge(appInfo.playStoreUrl, AppResources.playStoreBadge),
+        _buildStoreBadge(appInfo.appStoreUrl, AppResources.appStoreBadge),
+      ],
+    );
+  }
+
+  _buildStoreBadge(String url, String badge) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+              onTap: () {
+                js.context.callMethod("open", [context.text(url)]);
+              },
+              child: Container(constraints: BoxConstraints(maxWidth: 300), child: Image.network(badge)))),
+    );
+  }
+
+  Container _buildAppIconsPager() {
     var items = [
       _buildAppIconCard(AppResources.rippleEffectIcon, context.text("ripple_effect")),
       _buildAppIconCard(AppResources.linkedWordsIcon, context.text("linked_words")),
       _buildAppIconCard(AppResources.nonogramIcon, context.text("nonogram_colors"))
     ];
-    return Transform.translate(
-      offset: Offset(0, -100),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            height: 200,
-            child: PageView.builder(
-              itemCount: 3,
-              controller: pageControllerProvider.get(context),
-              itemBuilder: (context, index) {
-                var currentIndexOffset = 1.0 - (index - _pageOffset).abs().clamp(0.0, 1.0);
-                return MouseRegion(
-                  cursor: SystemMouseCursors.click,
-                  child: GestureDetector(
-                      onTap: () {
-                        pageControllerProvider
-                            .get(context)
-                            .animateToPage(index, duration: Duration(milliseconds: 500), curve: Curves.decelerate);
-                      },
-                      child: Transform.translate(
-                          offset: Offset(0, -currentIndexOffset * 20),
-                          child: Transform.scale(scale: 1.0 + currentIndexOffset * 0.2, child: items[index]))),
-                );
-              }, // set ImageCardItem or IconTitleCardItem class
-            ),
-          ),
-          Container(
-            height: 800,
-          )
-        ],
+    return Container(
+      height: 200,
+      child: PageView.builder(
+        itemCount: 3,
+        physics: NeverScrollableScrollPhysics(),
+        controller: pageControllerProvider.get(context),
+        itemBuilder: (context, index) {
+          var currentIndexOffset = 1.0 - (index - _pageOffset).abs().clamp(0.0, 1.0);
+          return MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: GestureDetector(
+                onTap: () {
+                  pageControllerProvider
+                      .get(context)
+                      .animateToPage(index, duration: Duration(milliseconds: 700), curve: Curves.decelerate);
+                },
+                child: Transform.translate(
+                    offset: Offset(0, -currentIndexOffset * 20),
+                    child: Transform.scale(scale: 1.0 + currentIndexOffset * 0.2, child: items[index]))),
+          );
+        }, // set ImageCardItem or IconTitleCardItem class
       ),
     );
   }

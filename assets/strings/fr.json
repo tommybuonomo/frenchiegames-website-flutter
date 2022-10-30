@@ -3,6 +3,22 @@
   "header_our_games": "Nos jeux",
   "header_contact_us": "Nous contacter",
   "ripple_effect": "Ripple Effect",
+  "ripple_effect_desc": "Si vous aimez les puzzles Sudoku, vous allez adorer Ripple Effect Puzzle ! Chaque chambre doit être remplie de chacun des nombres de 1 au nombre de cellules de la chambre. Si deux nombres identiques apparaissent dans la même ligne ou colonne, autant de cellules que ce nombre doivent les séparer.",
+  "ripple_effect_privacy_policy_url": "https://tommybuonomo.github.io/rippleeffectpuzzle/index.html",
+  "ripple_effect_screenshot_prefix": "ripple_effect_screenshot_fr_",
+  "ripple_effect_play_store_url": "https://play.google.com/store/apps/details?id=com.tbuonomo.rippleeffectpuzzle",
+  "ripple_effect_app_store_url": "https://apps.apple.com/us/app/ripple-effect-puzzle/id1521454937",
   "linked_words": "Mots Liés",
-  "nonogram_colors": "Nonogram Colors"
+  "linked_words_desc": "Relier les groupes de lettres de droite à gauche ou de gauche à droite pour former un mot en rapport avec l'image.\nPouvez-vous deviner tous les mots et résoudre tous les niveaux ? Des nombreux puzzles vous attendent.",
+  "linked_words_privacy_policy_url": "https://frenchiegames.app/linkedwords/privacy-policy.html",
+  "linked_words_screenshot_prefix": "linked_words_screenshot_fr_",
+  "linked_words_play_store_url": "https://play.google.com/store/apps/details?id=com.tbuonomo.linkedwords",
+  "linked_words_app_store_url": "https://apps.apple.com/us/app/linked-words/id6443764039",
+  "linked_words_app_terms_url": "https://frenchiegames.app/linkedwords/terms-and-conditions.html",
+  "nonogram_colors": "Nonogram Colors",
+  "nonogram_colors_desc": "Résolvez les énigmes des nombres logiques avec des règles simples et des solutions stimulantes pour découvrir les images en couleur! Choisissez votre niveau de difficulté et exercez votre logique! Plus de 500 Nonogrammes multicolores, jouez sans limites",
+  "nonogram_colors_privacy_policy_url": "https://tommybuonomo.github.io/nonogramcolordot",
+  "nonogram_colors_screenshot_prefix": "nonogram_colors_screenshot_fr_",
+  "nonogram_colors_play_store_url": "https://play.google.com/store/apps/details?id=com.tbuonomo.nonogramcolordot",
+  "nonogram_colors_app_store_url": "https://apps.apple.com/us/app/nonogram-colors/id1491779584"
 }
