@@ -1,6 +1,7 @@
 import 'dart:js' as js;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:frenchiegames_website/core/platform/extension/context_extensions.dart';
 import 'package:frenchiegames_website/core/platform/util/responsive_provider.dart';
 import 'package:frenchiegames_website/core/platform/widget/app_scaffold.dart';

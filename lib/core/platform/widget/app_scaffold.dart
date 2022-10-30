@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frenchiegames_website/core/platform/extension/context_extensions.dart';
+import 'package:frenchiegames_website/core/platform/widget/translation_text.dart';
+import 'package:rich_clipboard/rich_clipboard.dart';
 
 import '../../resources/app_colors.dart';
 import 'hover_text.dart';
@@ -51,7 +53,9 @@ class _AppScaffoldState extends State<AppScaffold> {
                         HoverText(
                           text: context.text("header_contact_us"),
                           style: context.textTheme.subtitle1,
-                          onTap: () {},
+                          onTap: () {
+                            _launchMailClient();
+                          },
                           underline: true,
                         ),
                       ],
@@ -64,5 +68,16 @@ class _AppScaffoldState extends State<AppScaffold> {
         ],
       ),
     );
+  }
+
+  void _launchMailClient() async {
+    var mail = "frenchiegames.app@gmail.com";
+    await RichClipboard.setData(RichClipboardData(text: mail));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: TText(
+      context,
+      "mail_copied",
+      style: context.textTheme.subtitle1!.copyWith(fontSize: 22),
+    )));
   }
 }
