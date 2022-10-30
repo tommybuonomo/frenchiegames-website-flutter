@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:frenchiegames_website/core/platform/extension/context_extensions.dart';
 import 'package:frenchiegames_website/core/platform/util/responsive_provider.dart';
 import 'package:frenchiegames_website/core/platform/widget/app_scaffold.dart';
+import 'package:frenchiegames_website/core/platform/widget/hover_text.dart';
 import 'package:frenchiegames_website/core/resources/app_resources.dart';
 
 import '../../core/platform/widget/translation_text.dart';
@@ -175,6 +176,20 @@ class _HomePageState extends State<HomePage> {
         SizedBox.fromSize(size: Size.fromHeight(20)),
         _buildStoreBadge(appInfo.playStoreUrl, AppResources.playStoreBadge),
         _buildStoreBadge(appInfo.appStoreUrl, AppResources.appStoreBadge),
+        SizedBox.fromSize(size: Size.fromHeight(20)),
+        HoverText(
+          text: context.text("privacy_policy"),
+          onTap: () => _openUrl(context.text(appInfo.privacyPolicyUrl)),
+          style: context.textTheme.subtitle1,
+        ),
+        SizedBox.fromSize(size: Size.fromHeight(8)),
+        appInfo.termsUrl == null
+            ? Container()
+            : HoverText(
+                text: context.text("terms"),
+                onTap: () => _openUrl(context.text(appInfo.termsUrl!)),
+                style: context.textTheme.subtitle1,
+              )
       ],
     );
   }
@@ -185,9 +200,7 @@ class _HomePageState extends State<HomePage> {
       child: MouseRegion(
           cursor: SystemMouseCursors.click,
           child: GestureDetector(
-              onTap: () {
-                js.context.callMethod("open", [context.text(url)]);
-              },
+              onTap: () => _openUrl(context.text(url)),
               child: Container(constraints: BoxConstraints(maxWidth: 300), child: Image.network(badge)))),
     );
   }
@@ -246,5 +259,9 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     );
+  }
+
+  _openUrl(url) {
+    js.context.callMethod("open", [url]);
   }
 }

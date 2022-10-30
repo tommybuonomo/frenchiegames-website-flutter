@@ -49,16 +49,16 @@ class _HoverTextState extends State<HoverText> with SingleTickerProviderStateMix
             ),
           ),
           _textWidth == null
-              ? Container()
+              ? Container(width: 0,)
               : widget.underline
                   ? AnimatedContainer(
-            margin: EdgeInsets.only(top: 4),
+                      margin: EdgeInsets.only(top: 4),
                       duration: Duration(milliseconds: 100),
                       width: _hovered ? _textWidth! * 0.7 : _textWidth! * 0,
                       height: 2.0,
                       decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(2.0)),
                     )
-                  : Container()
+                  : Container(width: 0,)
         ],
       ),
     );
