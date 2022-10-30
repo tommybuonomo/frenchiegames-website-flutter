@@ -1,6 +1,6 @@
 # Frenchie Games website
 
-This repository is the Flutter web application for the http://frenchiegames.app website. It uses assets made by myself using Figma.
+This repository is the Flutter web application for the https://frenchiegames.app website. It uses assets made by myself using Figma.
 
 I created this website to promote my 3 games on the PlayStore and the AppStore. If you are an Indie game developer, do not hesitate to fork the project and replace the assets to make your own games promotion website 😘
 
